@@ -1,5 +1,5 @@
 import random, json
-from textwrap import indent
+from RSA import main
 
 class Cadastro():
     def __init__(self):
@@ -32,6 +32,7 @@ class Cadastro():
         base[id] = {}
         base[id]["nickname"] = self.nickname
         base[id]["senha"] = self.senha
+        base[id]["chave publica"] = main(self.nickname)
 
         with open("db.json", "r+", encoding="utf8") as db:
             dados.update(base)

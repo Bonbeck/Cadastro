@@ -4,10 +4,10 @@
 import random, sys, os, primeNum, cryptomath
 
 
-def main():
+def main(user):
     # Create a public/private keypair with 1024-bit keys:
     print('Making key files...')
-    makeKeyFiles('al_sweigart', 1024)
+    makeKeyFiles(user, 1024)
     print('Key files made.')
 
 def generateKey(keySize):
@@ -71,5 +71,5 @@ def makeKeyFiles(name, keySize):
 
 # If makePublicPrivateKeys.py is run (instead of imported as a module),
 # call the main() function:
-if __name__ == '__main__':
-    main()
+#if __name__ == '__main__':
+ #   main()
