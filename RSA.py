@@ -7,8 +7,10 @@ import random, sys, os, primeNum, cryptomath
 def main(user):
     # Create a public/private keypair with 1024-bit keys:
     print('Making key files...')
-    makeKeyFiles(user, 1024)
+    chave_pub = makeKeyFiles(user, 1024)
     print('Key files made.')
+
+    return chave_pub
 
 def generateKey(keySize):
     # Creates public/private keys keySize bits in size.
@@ -56,9 +58,9 @@ def makeKeyFiles(name, keySize):
     print('The public key is a %s and a %s digit number.' % (len(str(publicKey[0])), len(str(publicKey[1]))))
         
     print('Writing public key to file %s_pubkey.txt...' % (name))
-    fo = open('%s_pubkey.txt' % (name), 'w')
-    fo.write('%s,%s,%s' % (keySize, publicKey[0], publicKey[1]))
-    fo.close()
+    #fo = open('%s_pubkey.txt' % (name), 'w')
+    #fo.write('%s,%s,%s' % (keySize, publicKey[0], publicKey[1]))
+    #fo.close()
 
     print()
     print('The private key is a %s and a %s digit number.' % (len(str(publicKey[0])), len(str(publicKey[1]))))
@@ -67,6 +69,8 @@ def makeKeyFiles(name, keySize):
     fo = open('%s_privkey.txt' % (name), 'w')
     fo.write('%s,%s,%s' % (keySize, privateKey[0], privateKey[1]))
     fo.close()
+
+    return keySize, publicKey[0], publicKey[1]
 
 
 # If makePublicPrivateKeys.py is run (instead of imported as a module),
