@@ -38,4 +38,11 @@ class Cadastro():
             dados.update(base)
             db.seek(0)
             json.dump(dados, db, ensure_ascii=False, indent=2)
-        return 
+        return
+
+class Login():
+    def __init__(self):
+        try:
+            bd = open("db.json", "r", encoding="utf8")
+        except:
+            Cadastro()

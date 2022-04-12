@@ -1,15 +1,25 @@
-from cadastro import Cadastro
+from cadastro import Cadastro, Login
 import json
 
-print("_"*50, "\n")
-print("1. cadastrar\n2. consultar\n3. atualizar")
-print("_"*50, "\n")
+login = False
+cadastro = False
+opcao = input("1. login\n2. cadastrar ")
+
+if opcao == "1":
+    Login()
+
+elif opcao == "2":
+    Cadastro().armazena()
+
+#usuario logado
 
 option = input("digite a opção: ")
 
+print("_"*50, "\n")
+print("1. consultar\n2. atualizar")
+print("_"*50, "\n")
+
 if option == "1":
-    Cadastro().armazena()
-elif option == "2":
     with open("db.json", "r", encoding="utf8") as db:
         data = json.load(db)
     print("_"*50, "\n")
@@ -29,4 +39,4 @@ elif option == "2":
                     print(user)
 
     #    print(data)
-    
+    #to do: atualizar()
