@@ -1,3 +1,4 @@
+from operator import truediv
 import random, json
 from RSA import main
 
@@ -43,6 +44,29 @@ class Cadastro():
 class Login():
     def __init__(self):
         try:
-            bd = open("db.json", "r", encoding="utf8")
+            self.bd = open("db.json", "r", encoding="utf8")
         except:
             Cadastro()
+
+    def autenticacao(self):
+        dados = json.load(self.bd)
+        nickname = input("nickname: ")
+        senha = input("senha: ")
+        validacao = False
+
+        for id in dados:
+            if senha == dados[id]["senha"]:
+                validacao = True
+                if nickname == dados[id]["nickname"]:
+                    with open(f"{nickname}_privkey.txt", "r", encoding="utf8") as pk:
+                        private_key = pk.read()
+                        priv_key = private_key.split(",")[1]
+                    pub_key = str(dados[id]["chave publica"][1])
+                    #print(type(pub_key), type(priv_key))
+                    if pub_key == priv_key:
+                        return "logado"
+            else:
+                validacao = False
+        if validacao == False:
+            return "senha incorreta"
+            
