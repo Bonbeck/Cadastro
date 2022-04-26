@@ -1,5 +1,7 @@
 from cadastro import Cadastro, Login
+from email_senha import EmailSenha
 import json
+
 
 login = False
 cadastro = False
@@ -13,6 +15,7 @@ if opcao == "1":
         login = Login().autenticacao()
         tentativas += 1
         if tentativas == 2:
+            EmailSenha(Login().retorna_email()).envia("135235vffdvf")
             break
     if login == "logado":
         option = input("digite a opção: ")
