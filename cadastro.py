@@ -1,14 +1,25 @@
+import base64
 import email
 from operator import truediv
 import random, json
-from RSA import main
+from RSA import RSA
 
 class Cadastro():
-    def __init__(self):
-        self.nickname = input("digite seu apelido: ")
-        self.senha = input("digite sua senha: ")
-        self.email = input("digite seu email: ")
-
+    def __init__(self, email=None, senha=None, nickname=None, key=None, id=None, mudanca=False):
+        if email == None and senha == None and nickname == None:
+            self.nickname = input("digite seu apelido: ")
+            self.senha = input("digite sua senha: ")
+            self.email = input("digite seu email: ")
+            self.mudanca = mudanca
+            self.key = key
+            self.id = id
+        else:
+            self.nickname = nickname
+            self.senha = senha
+            self.email = email
+            self.mudanca = mudanca
+            self.key = key
+            self.id = id
     def armazena(self):
         try:
             db = open("db.json", "r")
@@ -22,7 +33,6 @@ class Cadastro():
         
         dados = json.load(db)
 
-        base = {}
         id = random.randint(0, 1000)
         
         while id in dados:
@@ -32,16 +42,30 @@ class Cadastro():
         #else:
             #print("existe na base")
 
+        base = {}
         base[id] = {}
-        base[id]["nickname"] = self.nickname
-        base[id]["senha"] = self.senha
-        base[id]["chave publica"] = main(self.nickname)
         base[id]["email"] = self.email
+        base[id]["senha"] = self.senha
+        base[id]["nickname"] = self.nickname
 
-        with open("db.json", "r+", encoding="utf8") as db:
-            dados.update(base)
-            db.seek(0)
-            json.dump(dados, db, ensure_ascii=False, indent=2)
+        if self.mudanca == False:
+            base[id]["chave publica"] = RSA(self.nickname)
+            with open("db.json", "r+", encoding="utf8") as db:
+                dados.update(base)
+                db.seek(0)
+                json.dump(dados, db, ensure_ascii=False, indent=2)
+        else:
+            base = {}
+            base[self.id] = {}
+            base[self.id]["email"] = self.email
+            base[self.id]["senha"] = self.senha
+            base[self.id]["nickname"] = self.nickname
+            base[self.id]["chave publica"] = self.key
+            with open("db.json", "r+", encoding="utf8") as db:
+                dados.update(base)
+                db.seek(0)
+                json.dump(dados, db, ensure_ascii=False, indent=2)
+
         return
 
 class Login():
@@ -64,7 +88,7 @@ class Login():
                     with open(f"{self.nickname}_privkey.txt", "r", encoding="utf8") as pk:
                         private_key = pk.read()
                         priv_key = private_key.split(",")[1]
-                    pub_key = str(self.dados[id]["chave publica"][1])
+                        pub_key = str(self.dados[id]["chave publica"][1])
                     #print(type(pub_key), type(priv_key))
                     if pub_key == priv_key:
                         return "logado"
@@ -76,6 +100,6 @@ class Login():
     def retorna_email(self):
         for id in self.dados:
             if self.nickname == self.dados[id]["nickname"]:
-                return self.dados[id]["email"]
+                return self.dados[id]["email"], self.nickname, self.dados[id]["chave publica"], id
 
         

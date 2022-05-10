@@ -1,6 +1,6 @@
 from cadastro import Cadastro, Login
 from email_senha import EmailSenha
-import json
+import json, random, string
 
 
 login = False
@@ -15,7 +15,29 @@ if opcao == "1":
         login = Login().autenticacao()
         tentativas += 1
         if tentativas == 2:
-            EmailSenha(Login().retorna_email()).envia("135235vffdvf")
+            codigo = "".join(random.choices(string.ascii_uppercase + string.digits, k=6))
+            dados = Login().retorna_email()
+            EmailSenha(dados[0]).envia(codigo)
+            autenticacao = input("digite o codigo enviado no seu email: ")
+            if autenticacao == codigo:
+                senha = input("digite sua nova senha: ")
+                confirmacao = input("confirme sua nova senha: ")
+                if senha == confirmacao:
+                    Cadastro(dados[0], senha, dados[1], dados[2], dados[3], True).armazena()
+                else:
+                    for i in range(2):
+                        senha = input("digite sua nova senha: ")
+                        confirmacao = input("confirme sua nova senha: ")
+                        if senha == confirmacao:
+                            Cadastro(dados[0], senha, dados[1], dados[2], dados[3], True).armazena()
+                            break
+            else:
+                i = 0
+                while autenticacao != codigo:
+                    i += 1
+                    autenticacao = input("digite o codigo enviado no seu email: ")
+                    if i == 4:
+                        break
             break
     if login == "logado":
         option = input("digite a opção: ")

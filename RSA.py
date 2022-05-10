@@ -4,7 +4,7 @@
 import random, sys, os, primeNum, cryptomath
 
 
-def main(user):
+def RSA(user):
     # Create a public/private keypair with 1024-bit keys:
     print('Making key files...')
     chave_pub = makeKeyFiles(user, 1024)
@@ -74,6 +74,6 @@ def makeKeyFiles(name, keySize):
 
 
 # If makePublicPrivateKeys.py is run (instead of imported as a module),
-# call the main() function:
-#if __name__ == '__main__':
- #   main()
+# call the RSA() function:
+#if __name__ == '__RSA__':
+ #   RSA()
