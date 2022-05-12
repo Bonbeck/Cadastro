@@ -66,7 +66,7 @@ def makeKeyFiles(name, keySize):
     print('The private key is a %s and a %s digit number.' % (len(str(publicKey[0])), len(str(publicKey[1]))))
         
     print('Writing private key to file %s_privkey.txt...' % (name))
-    fo = open('%s_privkey.txt' % (name), 'w')
+    fo = open('keys\\%s_privkey.txt' % (name), 'w')
     fo.write('%s,%s,%s' % (keySize, privateKey[0], privateKey[1]))
     fo.close()
 
