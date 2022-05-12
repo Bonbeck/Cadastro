@@ -70,9 +70,6 @@ if opcao == "1":
                             print(user)
             #    print(data)
             #to do: atualizar()
-    
 
 elif opcao == "2":
     Cadastro().armazena()
-
-#usuario logado
