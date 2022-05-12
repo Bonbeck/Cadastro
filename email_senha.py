@@ -46,7 +46,10 @@ class EmailSenha():
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
         server.login(self.sender_email, self.password)
-        server.sendmail(
+        try:
+          server.sendmail(
             self.sender_email, self.receiver_email, message.as_string()
         )
-    return print("o e-mail foi enviado com o codigo para sua conta")
+          return "o e-mail foi enviado com o codigo para sua conta"
+        except smtplib.SMTPRecipientsRefused:
+          return "o e-mail não existe"
