@@ -85,7 +85,7 @@ class Login():
             if senha == self.dados[id]["senha"]:
                 validacao = True
                 if self.nickname == self.dados[id]["nickname"]:
-                    with open(f"{self.nickname}_privkey.txt", "r", encoding="utf8") as pk:
+                    with open(f"keys\\{self.nickname}_privkey.txt", "r", encoding="utf8") as pk:
                         private_key = pk.read()
                         priv_key = private_key.split(",")[1]
                         pub_key = str(self.dados[id]["chave publica"][1])

@@ -44,11 +44,11 @@ if opcao == "1":
                             break
             break
     if login == "logado":
-        option = input("digite a opção: ")
 
         print("_"*50, "\n")
         print("1. consultar\n2. atualizar")
         print("_"*50, "\n")
+        option = input("digite a opção: ")
 
         if option == "1":
             with open("db.json", "r", encoding="utf8") as db:
